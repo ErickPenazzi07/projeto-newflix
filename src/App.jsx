@@ -8,6 +8,21 @@ import { useEffect, useState } from "react";
 import MovieCard from "./components/MovieCard/MovieCard";
 
 const App = () => {
+  const mudaTema = () => {
+    const tema = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+
+    document.documentElement.setAttribute("data-bs-theme", tema);
+  };
+
+  mudaTema();
+
+  // Adiciona o evento de mudança de tema automaticamente
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", mudaTema);
+
   const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
 
@@ -37,8 +52,12 @@ const App = () => {
 
   return (
     <>
-      <div data-bs-theme="auto">
-        <img className="mt-0  img-fluid " src={logo} alt="Logo" />
+      <div className="text-center text-md-center p-2 m-0 mx-auto d-flex flex-column">
+        <img className="mt-1 d-flex rounded mx-auto d-block " style={{
+          height: "500px",
+          width: "500px",
+          alignContent: "center",
+        }} src={logo} alt="Logo" />
 
         <div className="input-group mb-3 display-flex">
           <input
