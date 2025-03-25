@@ -1,4 +1,6 @@
-# React + Vite
+![Logo](/src/assets/Logotipo%20Moda%20Loja%20Minimalista%20Preto%20e%20Branco.png)
+
+# NewFlix
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
