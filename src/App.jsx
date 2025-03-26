@@ -1,10 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
+import "./scss/styles.scss";
+import { useEffect, useState } from "react";
 import logo from "./assets/Logotipo Moda Loja Minimalista Preto e Branco.png";
 import lupa from "./assets/search.svg";
 import Footer from "./components/footer/Footer";
-import { useEffect, useState } from "react";
 import MovieCard from "./components/MovieCard/MovieCard";
 
 const App = () => {
@@ -33,7 +34,7 @@ const App = () => {
 
   //Alimentando com dados para não ficar nulo com useEffect
   useEffect(() => {
-    searchMovies("Batman");
+    searchMovies("Spider");
   }, []);
 
   //criando a conexão com a API e trazendo informações
@@ -52,25 +53,33 @@ const App = () => {
 
   return (
     <>
-      <div className="text-center text-md-center p-2 m-0 mx-auto d-flex flex-column">
+      <div className="text-center text-md-center p-2 m-0 mx-auto d-flex flex-column ">
         <img className="mt-1 d-flex rounded mx-auto d-block " style={{
           height: "500px",
           width: "500px",
           alignContent: "center",
         }} src={logo} alt="Logo" />
 
-        <div className="input-group mb-3 display-flex">
+        <div className="input-group mb-3 d-flex flex-wrap justify-content-center">
           <input
-            className="form-control display-flex curvas bg-dark"
+            className="d-flex curvas m-2 p-3  " style={
+              {
+                width: "800px",
+                height: "50px",
+                borderRadius: "10px",
+                border: "none",
+                alignItems: "center",
+              }
+            }
             onKeyDown={handleKeyPress}
             onChange={(e) => setSearch(e.target.value)}
             type="text"
-            placeholder="Pesquise por filmes"
+            placeholder="Pesquise por filmes..."
           />
 
           <img
             onClick={() => searchMovies(search)}
-            className="display-flex m-2"
+            className="m-2 d-flex justify-content-end lupa"
             src={lupa}
             alt="lupa"
           />

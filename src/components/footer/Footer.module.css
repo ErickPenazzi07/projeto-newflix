@@ -1,16 +1,33 @@
-footer {
-    text-align: center;
+
+[data-bs-theme="dark"] {
+  footer {
     font-size: 20px;
     padding: 24px;
     font-weight: bolder;
     color: #f9d3b4;
+
   }
-  
+
   footer a {
     text-decoration: none;
     color: #f9d3b4;
   }
-  
+}
+[data-bs-theme="light"]{
+  footer {
+    font-size: 20px;
+    padding: 24px;
+    font-weight: bolder;
+    color: #000000;
+  }
+
+  footer a {
+    text-decoration: none;
+    color: #000000;
+  }
+
+}    
+ 
   footer p ion-icon {
     color: #ff0000;
   }

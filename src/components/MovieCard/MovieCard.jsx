@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import { useState } from "react";
 import MovieDescription from "../MovieDescription/MovieDescription";
+
 const MovieCard = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,7 +14,7 @@ const MovieCard = (props) => {
   return (
     <>
 <div
-  className={`movie card position-relative overflow-hidden border-0 shadow-lg rounded hover-effect`}
+  className={`movie card position-relative overflow-hidden border-0 shadow-lg rounded ${styles.shadow}`}
   style={{
     width: "310px",
     height: "460px",
