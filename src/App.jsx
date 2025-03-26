@@ -27,28 +27,35 @@ const App = () => {
   const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
 
-  //Utilizando chave de API do arquivo .env
-  // const apiKey = import.meta.env.VITE_OMDB_API_KEY;
-  const apiKey = "e4d577fa";
-  const apiUrl = `https://omdbapi.com/?apikey=${apiKey}`;
+  const accessToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+  const apiUrl = "https://api.themoviedb.org/3";
 
-  //Alimentando com dados para não ficar nulo com useEffect
-  useEffect(() => {
-    searchMovies("Spider");
-  }, []);
-
-  //criando a conexão com a API e trazendo informações
-  const searchMovies = async (title) => {
-    const response = await fetch(`${apiUrl}&s=${title}`);
-    const data = await response.json();
-
-    //alimentando o movies
-    setMovies(data.Search);
+  const fetchMovies = async (endpoint) => {
+    try {
+      const response = await fetch(`${apiUrl}${endpoint}`, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const data = await response.json();
+      setMovies(data.results);
+    } catch (error) {
+      console.error("Erro ao buscar filmes:", error);
+    }
   };
 
-  //e = evento | ao clicar ou digitar acontece algo
-  const handleKeyPress = (e) => {
-    e.key === "Enter" && searchMovies(search);
+  useEffect(() => {
+    fetchMovies(
+      "/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&sort_by=popularity.desc"
+    );
+  }, []);
+
+  const searchMovies = (title) => {
+    fetchMovies(
+      `/search/movie?query=${title}&include_adult=false&language=pt-BR&page=1`
+    );
   };
 
   return (
@@ -62,21 +69,18 @@ const App = () => {
 
         <div className="input-group mb-3 d-flex flex-wrap justify-content-center">
           <input
-            className="d-flex curvas m-2 p-3  " style={
-              {
-                width: "800px",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                alignItems: "center",
-              }
-            }
-            onKeyDown={handleKeyPress}
+            className="d-flex curvas m-2 p-3  " style={{
+              width: "800px",
+              height: "50px",
+              borderRadius: "10px",
+              border: "none",
+              alignItems: "center",
+            }}
+            onKeyDown={(e) => e.key === "Enter" && searchMovies(search)}
             onChange={(e) => setSearch(e.target.value)}
             type="text"
             placeholder="Pesquise por filmes..."
           />
-
           <img
             onClick={() => searchMovies(search)}
             className="m-2 d-flex justify-content-end lupa"
@@ -88,7 +92,10 @@ const App = () => {
         {movies?.length > 0 ? (
           <div className="d-flex flex-wrap justify-content-center">
             {movies.map((movie, index) => (
-              <MovieCard key={index} apiUrl={apiUrl} {...movie} />
+              <MovieCard
+               key={index}
+               {...movie}
+              />
             ))}
           </div>
         ) : (
